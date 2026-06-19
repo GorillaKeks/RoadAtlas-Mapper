@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
-using ETS2LA.Mapper.Models;
-using ETS2LA.Mapper.Services;
+using RoadAtlas.Mapper.Services;
+using RoadAtlas.Mapper.Models;
 
 namespace ETS2LA.Mapper.Views;
 

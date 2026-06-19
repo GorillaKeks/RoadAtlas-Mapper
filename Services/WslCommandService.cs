@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class WslCommandService
 {

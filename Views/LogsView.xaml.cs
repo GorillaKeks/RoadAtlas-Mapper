@@ -31,7 +31,7 @@ public partial class LogsView : UserControl
             string logDirectory =
                 Path.Combine(
                     appData,
-                    "ETS2LA Mapper",
+                    "RoadAtlas Mapper",
                     "Logs");
 
             if (!Directory.Exists(logDirectory))

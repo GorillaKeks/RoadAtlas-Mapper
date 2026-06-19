@@ -1,7 +1,7 @@
 ﻿using Ookii.Dialogs.Wpf;
 using System.IO;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class FolderDialogService
 {
@@ -148,7 +148,7 @@ public static class FolderDialogService
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.MyDocuments),
-                "ETS2LA Mapper",
+                "RoadAtlas Mapper",
                 "Output");
 
         Directory.CreateDirectory(path);

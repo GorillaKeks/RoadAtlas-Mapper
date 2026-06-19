@@ -1,4 +1,4 @@
-namespace ETS2LA.Mapper.Models;
+namespace RoadAtlas.Mapper.Models;
 
 public class AppSettings
 {

@@ -1,15 +1,15 @@
-using ETS2LA.Mapper.Models;
 using Newtonsoft.Json;
+using RoadAtlas.Mapper.Models;
 using System.IO;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class ConfigurationService
 {
     private static readonly string AppFolder =
         Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "ETS2LA Mapper");
+            "RoadAtlas Mapper");
 
     private static readonly string SettingsFile =
         Path.Combine(AppFolder, "settings.json");

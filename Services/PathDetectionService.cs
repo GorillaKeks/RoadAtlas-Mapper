@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class PathDetectionService
 {
@@ -58,7 +58,7 @@ public static class PathDetectionService
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.MyDocuments),
-                "ETS2LA Mapper",
+                "RoadAtlas Mapper",
                 "Output");
 
         Directory.CreateDirectory(path);

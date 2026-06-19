@@ -1,7 +1,7 @@
 using Serilog;
 using System.IO;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class LoggingService
 {
@@ -18,7 +18,7 @@ public static class LoggingService
             Path.Combine(
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData),
-                "ETS2LA Mapper");
+                "RoadAtlas Mapper");
 
         string logFolder =
             Path.Combine(
@@ -40,7 +40,7 @@ public static class LoggingService
         _initialized = true;
 
         Log.Information("========================================");
-        Log.Information("ETS2LA Mapper started");
+        Log.Information("RoadAtlas Mapper started");
         Log.Information("Application folder: {AppFolder}", appFolder);
         Log.Information("Log folder: {LogFolder}", logFolder);
         Log.Information("========================================");
@@ -69,7 +69,7 @@ public static class LoggingService
 
     public static void Shutdown()
     {
-        Log.Information("ETS2LA Mapper shutting down");
+        Log.Information("RoadAtlas Mapper shutting down");
 
         Log.CloseAndFlush();
     }

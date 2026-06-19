@@ -1,6 +1,4 @@
-﻿using ETS2LA.Mapper.Services;
-
-namespace ETS2LA.Mapper.Services;
+﻿namespace RoadAtlas.Mapper.Services;
 
 public static class NodeService
 {

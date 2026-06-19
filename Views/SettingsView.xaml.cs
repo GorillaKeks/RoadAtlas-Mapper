@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ETS2LA.Mapper.Models;
-using ETS2LA.Mapper.Services;
+using RoadAtlas.Mapper.Models;
+using RoadAtlas.Mapper.Services;
 
 namespace ETS2LA.Mapper.Views;
 
@@ -70,7 +70,7 @@ public partial class SettingsView : UserControl
 
         MessageBox.Show(
             "Settings saved successfully.",
-            "ETS2LA Mapper",
+            "RoadAtlas Mapper",
             MessageBoxButton.OK,
             MessageBoxImage.Information);
     }

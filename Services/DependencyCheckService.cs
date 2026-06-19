@@ -1,8 +1,8 @@
-﻿using ETS2LA.Mapper.Models;
+﻿using RoadAtlas.Mapper.Models;
 using System.Diagnostics;
 using System.IO;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class DependencyCheckService
 {

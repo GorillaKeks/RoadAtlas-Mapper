@@ -1,6 +1,6 @@
-﻿using ETS2LA.Mapper.Models;
+﻿using RoadAtlas.Mapper.Models;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class RepositoryService
 {

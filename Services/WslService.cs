@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace ETS2LA.Mapper.Services;
+namespace RoadAtlas.Mapper.Services;
 
 public static class WslService
 {

@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using ETS2LA.Mapper.Models;
-using ETS2LA.Mapper.Services;
+using RoadAtlas.Mapper.Models;
+using RoadAtlas.Mapper.Services;
 
 namespace ETS2LA.Mapper.Views;
 

@@ -1,0 +1,62 @@
+﻿<Window x:Class="ETS2LA.Mapper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ETS2LA Mapper"
+        Height="700"
+        Width="1200"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"
+                Background="#202020">
+
+            <StackPanel Margin="10">
+
+                <TextBlock Text="ETS2LA Mapper"
+                           Foreground="White"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           Margin="10"/>
+
+                <Button Content="Dashboard"
+                        Height="40"
+                        Margin="5"
+                        Click="DashboardButton_Click"/>
+
+                <Button Content="Settings"
+                        Height="40"
+                        Margin="5"
+                        Click="SettingsButton_Click"/>
+
+                <Button Content="Extraction"
+                        Height="40"
+                        Margin="5"
+                        Click="ExtractionButton_Click"/>
+
+                <Button Content="Repository"
+                        Height="40"
+                        Margin="5"
+                        Click="RepositoryButton_Click"/>
+
+                <Button Content="Logs"
+                        Height="40"
+                        Margin="5"
+                        Click="LogsButton_Click"/>
+
+            </StackPanel>
+
+        </Border>
+
+        <ContentControl x:Name="MainContent"
+                        Grid.Column="1"
+                        Margin="20"/>
+
+    </Grid>
+
+</Window>

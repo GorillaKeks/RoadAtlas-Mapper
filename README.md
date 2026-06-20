@@ -130,7 +130,7 @@ usa-graph.json
 
 ### Planned Features
 
-- 🚀 One-click application updates
+* 🚀 One-click application updates
 * 🔄 Real-time log streaming
 * 🔄 Real-time log streaming
 * 📊 Progress tracking

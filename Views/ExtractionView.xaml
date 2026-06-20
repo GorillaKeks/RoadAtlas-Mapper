@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ETS2LA.Mapper.Views.ExtractionView"
+﻿<UserControl x:Class="RoadAtlas.Mapper.Views.ExtractionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -6,7 +6,7 @@
 
         <StackPanel Margin="20">
 
-            <TextBlock Text="ETS2LA Map Extraction"
+            <TextBlock Text="RoadAtlas Map Extraction"
                        FontSize="28"
                        FontWeight="Bold"/>
 

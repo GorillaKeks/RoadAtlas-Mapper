@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using ETS2LA.Mapper.Views;
+using RoadAtlas.Mapper.Views;
 
-namespace ETS2LA.Mapper;
+namespace RoadAtlas.Mapper;
 
 public partial class MainWindow : Window
 {

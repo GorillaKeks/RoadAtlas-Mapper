@@ -1,10 +1,11 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Diagnostics;
 using System.Windows;
-using RoadAtlas.Mapper.Services;
+using System.Windows.Controls;
+using System.Windows.Media;
 using RoadAtlas.Mapper.Models;
+using RoadAtlas.Mapper.Services;
 
-namespace ETS2LA.Mapper.Views;
+namespace RoadAtlas.Mapper.Views;
 
 public partial class DashboardView : UserControl
 {
@@ -12,7 +13,16 @@ public partial class DashboardView : UserControl
     {
         InitializeComponent();
 
+        Loaded += DashboardView_Loaded;
+    }
+
+    private async void DashboardView_Loaded(
+        object sender,
+        RoutedEventArgs e)
+    {
         LoadDashboard();
+
+        await CheckForUpdates();
     }
 
     private void LoadDashboard()
@@ -29,22 +39,24 @@ public partial class DashboardView : UserControl
 
         foreach (var result in results)
         {
-            bool success = result.StartsWith("✓");
+            bool success =
+                result.StartsWith("✓");
 
             if (!success)
             {
                 hasErrors = true;
             }
 
-            StatusPanel.Children.Add(new TextBlock
-            {
-                Text = result,
-                FontSize = 14,
-                Margin = new Thickness(0, 3, 0, 3),
-                Foreground = success
-                    ? Brushes.Green
-                    : Brushes.Red
-            });
+            StatusPanel.Children.Add(
+                new TextBlock
+                {
+                    Text = result,
+                    FontSize = 14,
+                    Margin = new Thickness(0, 3, 0, 3),
+                    Foreground = success
+                        ? Brushes.Green
+                        : Brushes.Red
+                });
         }
 
         OverallStatusText.Text =
@@ -56,5 +68,65 @@ public partial class DashboardView : UserControl
             hasErrors
                 ? Brushes.Red
                 : Brushes.Green;
+    }
+
+    private async Task CheckForUpdates()
+    {
+        try
+        {
+            string currentVersion =
+                UpdateService.GetCurrentVersion();
+
+            VersionText.Text =
+                $"Version: {currentVersion}";
+
+            bool updateAvailable =
+                await UpdateService.UpdateAvailableAsync();
+
+            if (updateAvailable)
+            {
+                string latestVersion =
+                    await UpdateService.GetLatestVersionAsync()
+                    ?? "Unknown";
+
+                UpdateStatusText.Text =
+                    $"⚠ Update available: {latestVersion}";
+
+                UpdateStatusText.Foreground =
+                    Brushes.Orange;
+
+                OpenReleasePageButton.Visibility =
+                    Visibility.Visible;
+            }
+            else
+            {
+                UpdateStatusText.Text =
+                    "✔ You are running the latest version";
+
+                UpdateStatusText.Foreground =
+                    Brushes.Green;
+            }
+        }
+        catch
+        {
+            UpdateStatusText.Text =
+                "Unable to check for updates.";
+
+            UpdateStatusText.Foreground =
+                Brushes.Red;
+        }
+    }
+
+    private void OpenReleasePageButton_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        Process.Start(
+            new ProcessStartInfo
+            {
+                FileName =
+                    "https://github.com/GorillaKeks/RoadAtlas-Mapper/releases",
+                UseShellExecute = true
+            });
     }
 }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ETS2LA.Mapper.Views.RepositoryView"
+﻿<UserControl x:Class="RoadAtlas.Mapper.Views.RepositoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 

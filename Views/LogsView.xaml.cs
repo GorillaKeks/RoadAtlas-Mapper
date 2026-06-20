@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ETS2LA.Mapper.Views;
+namespace RoadAtlas.Mapper.Views;
 
 public partial class LogsView : UserControl
 {

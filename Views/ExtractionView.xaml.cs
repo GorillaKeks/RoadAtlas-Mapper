@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using RoadAtlas.Mapper.Models;
 using RoadAtlas.Mapper.Services;
 
-namespace ETS2LA.Mapper.Views;
+namespace RoadAtlas.Mapper.Views;
 
 public partial class ExtractionView : UserControl
 {

@@ -130,7 +130,7 @@ usa-graph.json
 
 ### Planned Features
 
-* 🎨 Enhanced UI/UX
+* 🎨 Layout Design
 * 🚀 One-click application updates
 * 🔄 Real-time log streaming
 * 🔄 Real-time log streaming

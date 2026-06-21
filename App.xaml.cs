@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using RoadAtlas.Mapper.Services;
 
-namespace ETS2LA.Mapper;
+namespace RoadAtlas.Mapper;
 
 public partial class App : Application
 {

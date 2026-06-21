@@ -16,7 +16,7 @@ public static class UpdateService
             .GetName()
             .Version?
             .ToString(3)
-            ?? "Unknown";
+            ?? "0.0.0";
     }
 
     public static async Task<string?> GetLatestVersionAsync()
@@ -48,17 +48,64 @@ public static class UpdateService
 
     public static async Task<bool> UpdateAvailableAsync()
     {
-        string currentVersion =
-            GetCurrentVersion();
+        try
+        {
+            string currentVersion =
+                GetCurrentVersion();
 
-        string? latestVersion =
-            await GetLatestVersionAsync();
+            string? latestVersion =
+                await GetLatestVersionAsync();
 
-        if (string.IsNullOrWhiteSpace(latestVersion))
+            if (string.IsNullOrWhiteSpace(latestVersion))
+            {
+                return false;
+            }
+
+            Version current =
+                Version.Parse(currentVersion);
+
+            Version latest =
+                Version.Parse(latestVersion);
+
+            return latest > current;
+        }
+        catch
         {
             return false;
         }
+    }
 
-        return currentVersion != latestVersion;
+    public static async Task<string?> GetDownloadUrlAsync()
+    {
+        try
+        {
+            using HttpClient client = new();
+
+            client.DefaultRequestHeaders.Add(
+                "User-Agent",
+                "RoadAtlas-Mapper");
+
+            string json =
+                await client.GetStringAsync(
+                    LatestReleaseUrl);
+
+            JObject release =
+                JObject.Parse(json);
+
+            JArray? assets =
+                release["assets"] as JArray;
+
+            if (assets == null || assets.Count == 0)
+            {
+                return null;
+            }
+
+            return assets[0]?["browser_download_url"]
+                ?.ToString();
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

@@ -14,7 +14,8 @@ public partial class ExtractionView : UserControl
     {
         InitializeComponent();
 
-        Loaded += ExtractionView_Loaded;
+
+    Loaded += ExtractionView_Loaded;
     }
 
     private void ExtractionView_Loaded(
@@ -45,6 +46,8 @@ public partial class ExtractionView : UserControl
         {
             GamePathTextBox.Text =
                 dialog.SelectedPath;
+
+            LoadDetectedContent();
         }
     }
 
@@ -89,13 +92,8 @@ public partial class ExtractionView : UserControl
         DetectedModsListBox.Items.Clear();
 
         var dlcs =
-    DlcDetectionService.GetInstalledDlcs(
-        GamePathTextBox.Text);
-
-        OutputTextBox.Text =
-            $"GamePath: {GamePathTextBox.Text}" +
-            Environment.NewLine +
-            $"Found DLCs: {dlcs.Count}";
+            DlcDetectionService.GetInstalledDlcs(
+                GamePathTextBox.Text);
 
         foreach (var dlc in dlcs)
         {
@@ -124,6 +122,15 @@ public partial class ExtractionView : UserControl
     {
         try
         {
+            string gamePath =
+                GamePathTextBox.Text;
+
+            string modPath =
+                ModPathTextBox.Text;
+
+            string outputPath =
+                OutputPathTextBox.Text;
+
             RunParserButton.IsEnabled = false;
 
             ParserStatusText.Text = "Running";
@@ -139,9 +146,9 @@ public partial class ExtractionView : UserControl
             string result =
                 await Task.Run(() =>
                     ParserService.RunParser(
-                        GamePathTextBox.Text,
-                        ModPathTextBox.Text,
-                        OutputPathTextBox.Text));
+                        gamePath,
+                        modPath,
+                        outputPath));
 
             OutputTextBox.Text = result;
 
@@ -169,15 +176,18 @@ public partial class ExtractionView : UserControl
     {
         try
         {
+            string outputPath =
+                OutputPathTextBox.Text;
+
+            bool isEts2 =
+                GameComboBox.SelectedIndex == 0;
+
             RunGeneratorButton.IsEnabled = false;
 
             GeneratorStatusText.Text = "Running";
             PipelineStatusText.Text = "Running";
 
             PipelineProgressBar.Value = 50;
-
-            bool isEts2 =
-                GameComboBox.SelectedIndex == 0;
 
             OutputTextBox.Text =
                 "Starting generator..." +
@@ -187,7 +197,7 @@ public partial class ExtractionView : UserControl
             string result =
                 await Task.Run(() =>
                     GeneratorService.RunGraphGenerator(
-                        OutputPathTextBox.Text,
+                        outputPath,
                         isEts2));
 
             OutputTextBox.Text = result;
@@ -216,6 +226,18 @@ public partial class ExtractionView : UserControl
     {
         try
         {
+            string gamePath =
+                GamePathTextBox.Text;
+
+            string modPath =
+                ModPathTextBox.Text;
+
+            string outputPath =
+                OutputPathTextBox.Text;
+
+            bool isEts2 =
+                GameComboBox.SelectedIndex == 0;
+
             RunParserButton.IsEnabled = false;
             RunGeneratorButton.IsEnabled = false;
             RunPipelineButton.IsEnabled = false;
@@ -233,22 +255,19 @@ public partial class ExtractionView : UserControl
 
             await Task.Run(() =>
                 ParserService.RunParser(
-                    GamePathTextBox.Text,
-                    ModPathTextBox.Text,
-                    OutputPathTextBox.Text));
+                    gamePath,
+                    modPath,
+                    outputPath));
 
             ParserStatusText.Text = "Completed";
             GeneratorStatusText.Text = "Running";
 
             PipelineProgressBar.Value = 60;
 
-            bool isEts2 =
-                GameComboBox.SelectedIndex == 0;
-
             string generatorResult =
                 await Task.Run(() =>
                     GeneratorService.RunGraphGenerator(
-                        OutputPathTextBox.Text,
+                        outputPath,
                         isEts2));
 
             OutputTextBox.AppendText(
@@ -312,10 +331,12 @@ public partial class ExtractionView : UserControl
             OutputPathTextBox.Text =
                 settings.OutputPath;
 
-            LoadDetectedContent(); // HIER EINFÜGEN
+            LoadDetectedContent();
         }
         catch
         {
         }
     }
+
+
 }

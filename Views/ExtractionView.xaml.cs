@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Ookii.Dialogs.Wpf;
 using RoadAtlas.Mapper.Models;
 using RoadAtlas.Mapper.Services;
 
@@ -20,6 +21,7 @@ public partial class ExtractionView : UserControl
         object sender,
         RoutedEventArgs e)
     {
+        ResetPipelineStatus();
         LoadSettings();
     }
 
@@ -33,22 +35,101 @@ public partial class ExtractionView : UserControl
         LoadSettings();
     }
 
+    private void BrowseGamePathButton_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        var dialog = new VistaFolderBrowserDialog();
+
+        if (dialog.ShowDialog() == true)
+        {
+            GamePathTextBox.Text =
+                dialog.SelectedPath;
+        }
+    }
+
+    private void BrowseModPathButton_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        var dialog = new VistaFolderBrowserDialog();
+
+        if (dialog.ShowDialog() == true)
+        {
+            ModPathTextBox.Text =
+                dialog.SelectedPath;
+        }
+    }
+
+    private void BrowseOutputPathButton_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        var dialog = new VistaFolderBrowserDialog();
+
+        if (dialog.ShowDialog() == true)
+        {
+            OutputPathTextBox.Text =
+                dialog.SelectedPath;
+        }
+    }
+
+    private void ResetPipelineStatus()
+    {
+        PipelineStatusText.Text = "Ready";
+        ParserStatusText.Text = "Idle";
+        GeneratorStatusText.Text = "Idle";
+
+        PipelineProgressBar.Value = 0;
+    }
+
+    private void LoadDetectedContent()
+    {
+        DetectedDlcsListBox.Items.Clear();
+        DetectedModsListBox.Items.Clear();
+
+        var dlcs =
+    DlcDetectionService.GetInstalledDlcs(
+        GamePathTextBox.Text);
+
+        OutputTextBox.Text =
+            $"GamePath: {GamePathTextBox.Text}" +
+            Environment.NewLine +
+            $"Found DLCs: {dlcs.Count}";
+
+        foreach (var dlc in dlcs)
+        {
+            DetectedDlcsListBox.Items.Add(
+                $"✓ {dlc}");
+        }
+
+        if (dlcs.Count == 0)
+        {
+            DetectedDlcsListBox.Items.Add(
+                "No DLCs detected");
+        }
+
+        DetectedModsListBox.Items.Add(
+            "Mod detection coming soon...");
+
+        RoadsTextBlock.Text = "-";
+        CitiesTextBlock.Text = "-";
+        CompaniesTextBlock.Text = "-";
+        PrefabsTextBlock.Text = "-";
+    }
+
     private async void RunParserButton_Click(
         object sender,
         RoutedEventArgs e)
     {
         try
         {
-            string gamePath =
-                GamePathTextBox.Text?.Trim() ?? string.Empty;
-
-            string modPath =
-                ModPathTextBox.Text?.Trim() ?? string.Empty;
-
-            string outputPath =
-                OutputPathTextBox.Text?.Trim() ?? string.Empty;
-
             RunParserButton.IsEnabled = false;
+
+            ParserStatusText.Text = "Running";
+            PipelineStatusText.Text = "Running";
+
+            PipelineProgressBar.Value = 25;
 
             OutputTextBox.Text =
                 "Starting parser..." +
@@ -58,15 +139,23 @@ public partial class ExtractionView : UserControl
             string result =
                 await Task.Run(() =>
                     ParserService.RunParser(
-                        gamePath,
-                        modPath,
-                        outputPath));
+                        GamePathTextBox.Text,
+                        ModPathTextBox.Text,
+                        OutputPathTextBox.Text));
 
             OutputTextBox.Text = result;
+
+            ParserStatusText.Text = "Completed";
+            PipelineStatusText.Text = "Ready";
+
+            PipelineProgressBar.Value = 100;
         }
         catch (Exception ex)
         {
             OutputTextBox.Text = ex.ToString();
+
+            ParserStatusText.Text = "Failed";
+            PipelineStatusText.Text = "Failed";
         }
         finally
         {
@@ -80,13 +169,15 @@ public partial class ExtractionView : UserControl
     {
         try
         {
-            string outputPath =
-                OutputPathTextBox.Text?.Trim() ?? string.Empty;
+            RunGeneratorButton.IsEnabled = false;
+
+            GeneratorStatusText.Text = "Running";
+            PipelineStatusText.Text = "Running";
+
+            PipelineProgressBar.Value = 50;
 
             bool isEts2 =
                 GameComboBox.SelectedIndex == 0;
-
-            RunGeneratorButton.IsEnabled = false;
 
             OutputTextBox.Text =
                 "Starting generator..." +
@@ -96,14 +187,22 @@ public partial class ExtractionView : UserControl
             string result =
                 await Task.Run(() =>
                     GeneratorService.RunGraphGenerator(
-                        outputPath,
+                        OutputPathTextBox.Text,
                         isEts2));
 
             OutputTextBox.Text = result;
+
+            GeneratorStatusText.Text = "Completed";
+            PipelineStatusText.Text = "Ready";
+
+            PipelineProgressBar.Value = 100;
         }
         catch (Exception ex)
         {
             OutputTextBox.Text = ex.ToString();
+
+            GeneratorStatusText.Text = "Failed";
+            PipelineStatusText.Text = "Failed";
         }
         finally
         {
@@ -117,58 +216,50 @@ public partial class ExtractionView : UserControl
     {
         try
         {
-            string gamePath =
-                GamePathTextBox.Text?.Trim() ?? string.Empty;
-
-            string modPath =
-                ModPathTextBox.Text?.Trim() ?? string.Empty;
-
-            string outputPath =
-                OutputPathTextBox.Text?.Trim() ?? string.Empty;
-
-            bool isEts2 =
-                GameComboBox.SelectedIndex == 0;
-
             RunParserButton.IsEnabled = false;
             RunGeneratorButton.IsEnabled = false;
             RunPipelineButton.IsEnabled = false;
 
+            PipelineStatusText.Text = "Running";
+            ParserStatusText.Text = "Running";
+            GeneratorStatusText.Text = "Waiting";
+
+            PipelineProgressBar.Value = 10;
+
             OutputTextBox.Text =
                 "Starting full pipeline..." +
                 Environment.NewLine +
-                Environment.NewLine +
-                "Step 1/2: Running parser..." +
                 Environment.NewLine;
 
-            string parserResult =
-                await Task.Run(() =>
-                    ParserService.RunParser(
-                        gamePath,
-                        modPath,
-                        outputPath));
+            await Task.Run(() =>
+                ParserService.RunParser(
+                    GamePathTextBox.Text,
+                    ModPathTextBox.Text,
+                    OutputPathTextBox.Text));
 
-            OutputTextBox.AppendText(
-                Environment.NewLine +
-                Environment.NewLine +
-                "Parser completed." +
-                Environment.NewLine +
-                Environment.NewLine +
-                "Step 2/2: Running generator..." +
-                Environment.NewLine);
+            ParserStatusText.Text = "Completed";
+            GeneratorStatusText.Text = "Running";
+
+            PipelineProgressBar.Value = 60;
+
+            bool isEts2 =
+                GameComboBox.SelectedIndex == 0;
 
             string generatorResult =
                 await Task.Run(() =>
                     GeneratorService.RunGraphGenerator(
-                        outputPath,
+                        OutputPathTextBox.Text,
                         isEts2));
 
             OutputTextBox.AppendText(
                 Environment.NewLine +
                 Environment.NewLine +
-                "Generator completed." +
-                Environment.NewLine +
-                Environment.NewLine +
                 generatorResult);
+
+            GeneratorStatusText.Text = "Completed";
+            PipelineStatusText.Text = "Completed";
+
+            PipelineProgressBar.Value = 100;
         }
         catch (Exception ex)
         {
@@ -176,6 +267,10 @@ public partial class ExtractionView : UserControl
                 Environment.NewLine +
                 Environment.NewLine +
                 ex);
+
+            PipelineStatusText.Text = "Failed";
+            ParserStatusText.Text = "Failed";
+            GeneratorStatusText.Text = "Failed";
         }
         finally
         {
@@ -190,6 +285,8 @@ public partial class ExtractionView : UserControl
         RoutedEventArgs e)
     {
         OutputTextBox.Clear();
+
+        ResetPipelineStatus();
     }
 
     private void LoadSettings()
@@ -214,6 +311,8 @@ public partial class ExtractionView : UserControl
 
             OutputPathTextBox.Text =
                 settings.OutputPath;
+
+            LoadDetectedContent(); // HIER EINFÜGEN
         }
         catch
         {

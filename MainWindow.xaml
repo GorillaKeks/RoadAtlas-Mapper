@@ -2,61 +2,142 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="RoadAtlas Mapper"
-        Height="700"
-        Width="1200"
-        WindowStartupLocation="CenterScreen">
+        Height="850"
+        Width="1400"
+        MinHeight="850"
+        MinWidth="1400"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
 
-    <Grid>
+	<Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="35"/>
+		</Grid.RowDefinitions>
 
-        <Border Grid.Column="0"
-                Background="#202020">
+		<!-- Main Area -->
 
-            <StackPanel Margin="10">
+		<Grid Grid.Row="0">
 
-                <TextBlock Text="RoadAtlas Mapper"
-                           Foreground="White"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           Margin="10"/>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="260"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
 
-                <Button Content="Dashboard"
-                        Height="40"
-                        Margin="5"
-                        Click="DashboardButton_Click"/>
+			<!-- Sidebar -->
 
-                <Button Content="Settings"
-                        Height="40"
-                        Margin="5"
-                        Click="SettingsButton_Click"/>
+			<Border Grid.Column="0"
+                    Background="{StaticResource SidebarBrush}">
 
-                <Button Content="Extraction"
-                        Height="40"
-                        Margin="5"
-                        Click="ExtractionButton_Click"/>
+				<Grid>
 
-                <Button Content="Repository"
-                        Height="40"
-                        Margin="5"
-                        Click="RepositoryButton_Click"/>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="120"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="90"/>
+					</Grid.RowDefinitions>
 
-                <Button Content="Logs"
-                        Height="40"
-                        Margin="5"
-                        Click="LogsButton_Click"/>
+					<!-- Logo -->
 
-            </StackPanel>
+					<StackPanel Grid.Row="0"
+                                Margin="20"
+                                VerticalAlignment="Center">
 
-        </Border>
+						<TextBlock Text="🗺"
+                                   FontSize="32"
+                                   HorizontalAlignment="Center"/>
 
-        <ContentControl x:Name="MainContent"
-                        Grid.Column="1"
-                        Margin="20"/>
+						<TextBlock Text="ROADATLAS"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
 
-    </Grid>
+						<TextBlock Text="Mapper v1.0.0"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedTextBrush}"
+                                   HorizontalAlignment="Center"/>
+
+					</StackPanel>
+
+					<!-- Navigation -->
+
+					<StackPanel Grid.Row="1">
+
+						<Button Content="🏠  Dashboard"
+                                Style="{StaticResource NavigationButtonStyle}"
+                                Click="DashboardButton_Click"/>
+
+						<Button Content="🗺  Extraction"
+                                Style="{StaticResource NavigationButtonStyle}"
+                                Click="ExtractionButton_Click"/>
+
+						<Button Content="📦  Repository"
+                                Style="{StaticResource NavigationButtonStyle}"
+                                Click="RepositoryButton_Click"/>
+
+						<Button Content="📜  Logs"
+                                Style="{StaticResource NavigationButtonStyle}"
+                                Click="LogsButton_Click"/>
+
+						<Button Content="⚙  Settings"
+                                Style="{StaticResource NavigationButtonStyle}"
+                                Click="SettingsButton_Click"/>
+
+					</StackPanel>
+
+					<!-- Status -->
+
+					<StackPanel Grid.Row="2"
+                                Margin="20">
+
+						<TextBlock Text="● GitHub Connected"
+                                   Foreground="{StaticResource SuccessBrush}"
+                                   Margin="0,0,0,5"/>
+
+						<TextBlock Text="● System Ready"
+                                   Foreground="{StaticResource SuccessBrush}"/>
+
+					</StackPanel>
+
+				</Grid>
+
+			</Border>
+
+			<!-- Content -->
+
+			<Grid Grid.Column="1"
+                  Margin="20">
+
+				<ContentControl x:Name="MainContent"/>
+
+			</Grid>
+
+		</Grid>
+
+		<!-- Status Bar -->
+
+		<Border Grid.Row="1"
+                Background="{StaticResource CardBrush}">
+
+			<Grid Margin="15,0">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Text="Ready"
+                           VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Column="1"
+                           Text="RoadAtlas Mapper v1.0.0"
+                           VerticalAlignment="Center"/>
+
+			</Grid>
+
+		</Border>
+
+	</Grid>
 
 </Window>

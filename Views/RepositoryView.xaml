@@ -2,70 +2,165 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
 
-        <StackPanel Margin="20">
+		<Grid Margin="10">
 
-            <TextBlock Text="Repository"
-                       FontSize="28"
-                       FontWeight="Bold"/>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
 
-            <Separator Margin="0,10"/>
+			<!-- Header -->
 
-            <TextBlock Text="Repository URL"/>
-            <TextBlock Text="https://github.com/ETS2LA/maps"
-                       FontWeight="Bold"
-                       Margin="0,0,0,15"/>
-
-            <TextBlock Text="Status"/>
-            <TextBlock x:Name="StatusTextBlock"
-                       Margin="0,0,0,10"/>
-
-            <TextBlock Text="Branch"/>
-            <TextBlock x:Name="BranchTextBlock"
-                       Margin="0,0,0,10"/>
-
-            <TextBlock Text="Commit"/>
-            <TextBlock x:Name="CommitTextBlock"
-                       Margin="0,0,0,10"/>
-
-            <TextBlock Text="Node.js"/>
-            <TextBlock x:Name="NodeTextBlock"
-                       Margin="0,0,0,10"/>
-
-            <TextBlock Text="Dependencies"/>
-            <TextBlock x:Name="DependenciesTextBlock"
-                       Margin="0,0,0,10"/>
-
-            <TextBlock Text="Parser"/>
-            <TextBlock x:Name="ParserTextBlock"
+			<TextBlock Grid.Row="0"
+                       Text="Repository"
+                       Style="{StaticResource PageTitleStyle}"
                        Margin="0,0,0,20"/>
 
-            <WrapPanel>
+			<!-- Repository Status -->
 
-                <Button Content="Refresh"
-                        Width="140"
-                        Height="35"
-                        Margin="5"
-                        Click="RefreshButton_Click"/>
+			<Border Grid.Row="1"
+                    Style="{StaticResource CardStyle}"
+                    Margin="0,0,0,12">
 
-                <Button Content="Build Parser"
-                        Width="140"
-                        Height="35"
-                        Margin="5"
-                        Click="BuildParserButton_Click"/>
+				<StackPanel>
 
-            </WrapPanel>
+					<TextBlock Text="Repository Status"
+                               Style="{StaticResource SectionTitleStyle}"
+                               Margin="0,0,0,15"/>
 
-            <TextBox x:Name="OutputTextBox"
-                     Margin="0,20,0,0"
-                     Height="250"
-                     AcceptsReturn="True"
-                     IsReadOnly="True"
-                     VerticalScrollBarVisibility="Auto"/>
+					<TextBlock Text="Repository URL"
+                               FontWeight="SemiBold"/>
 
-        </StackPanel>
+					<TextBlock Text="https://github.com/ETS2LA/maps"
+                               Margin="0,0,0,12"/>
 
-    </ScrollViewer>
+					<TextBlock Text="Status"
+                               FontWeight="SemiBold"/>
+
+					<TextBlock x:Name="StatusTextBlock"
+                               Margin="0,0,0,12"/>
+
+					<TextBlock Text="Branch"
+                               FontWeight="SemiBold"/>
+
+					<TextBlock x:Name="BranchTextBlock"
+                               Margin="0,0,0,12"/>
+
+					<TextBlock Text="Latest Commit"
+                               FontWeight="SemiBold"/>
+
+					<TextBlock x:Name="CommitTextBlock"/>
+
+				</StackPanel>
+
+			</Border>
+
+			<!-- Environment + Actions -->
+
+			<Grid Grid.Row="2"
+                  Margin="0,0,0,12">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="1*"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Environment -->
+
+				<Border Grid.Column="0"
+                        Style="{StaticResource CardStyle}"
+                        Margin="0,0,12,0">
+
+					<StackPanel>
+
+						<TextBlock Text="Build Environment"
+                                   Style="{StaticResource SectionTitleStyle}"
+                                   Margin="0,0,0,15"/>
+
+						<TextBlock Text="Node.js"
+                                   FontWeight="SemiBold"/>
+
+						<TextBlock x:Name="NodeTextBlock"
+                                   Margin="0,0,0,12"/>
+
+						<TextBlock Text="Dependencies"
+                                   FontWeight="SemiBold"/>
+
+						<TextBlock x:Name="DependenciesTextBlock"
+                                   Margin="0,0,0,12"/>
+
+						<TextBlock Text="Parser"
+                                   FontWeight="SemiBold"/>
+
+						<TextBlock x:Name="ParserTextBlock"/>
+
+					</StackPanel>
+
+				</Border>
+
+				<!-- Actions -->
+
+				<Border Grid.Column="1"
+                        Style="{StaticResource CardStyle}">
+
+					<StackPanel>
+
+						<TextBlock Text="Actions"
+                                   Style="{StaticResource SectionTitleStyle}"
+                                   Margin="0,0,0,15"/>
+
+						<Button Content="Refresh"
+                                Height="42"
+                                Margin="0,0,0,10"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="RefreshButton_Click"/>
+
+						<Button Content="Build Parser"
+                                Height="42"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="BuildParserButton_Click"/>
+
+					</StackPanel>
+
+				</Border>
+
+			</Grid>
+
+			<!-- Output -->
+
+			<Border Grid.Row="3"
+                    Style="{StaticResource CardStyle}">
+
+				<Grid>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+
+					<TextBlock Text="Output Log"
+                               Style="{StaticResource SectionTitleStyle}"
+                               Margin="0,0,0,15"/>
+
+					<TextBox x:Name="OutputTextBox"
+                             Grid.Row="1"
+                             IsReadOnly="True"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             FontFamily="Consolas"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"/>
+
+				</Grid>
+
+			</Border>
+
+		</Grid>
+
+	</ScrollViewer>
 
 </UserControl>

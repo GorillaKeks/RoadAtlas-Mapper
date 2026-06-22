@@ -14,6 +14,8 @@ public partial class SettingsView : UserControl
         InitializeComponent();
 
         LoadSettings();
+
+        AutoDetectButton.Click += AutoDetectButton_Click;
     }
 
     private void LoadSettings()
@@ -35,11 +37,23 @@ public partial class SettingsView : UserControl
         if (string.IsNullOrWhiteSpace(_settings.OutputPath))
             _settings.OutputPath = PathDetectionService.GetOutputPath();
 
-        ETS2PathTextBox.Text = _settings.ETS2Path;
-        ATSPathTextBox.Text = _settings.ATSPath;
-        ETS2ModPathTextBox.Text = _settings.ETS2ModPath;
-        ATSModPathTextBox.Text = _settings.ATSModPath;
-        OutputPathTextBox.Text = _settings.OutputPath;
+        RepositoryPathTextBox.Text =
+            _settings.RepositoryPath;
+
+        ETS2PathTextBox.Text =
+            _settings.ETS2Path;
+
+        ATSPathTextBox.Text =
+            _settings.ATSPath;
+
+        ETS2ModPathTextBox.Text =
+            _settings.ETS2ModPath;
+
+        ATSModPathTextBox.Text =
+            _settings.ATSModPath;
+
+        OutputPathTextBox.Text =
+            _settings.OutputPath;
 
         WslDistributionComboBox.Items.Clear();
 
@@ -56,11 +70,23 @@ public partial class SettingsView : UserControl
         object sender,
         RoutedEventArgs e)
     {
-        _settings.ETS2Path = ETS2PathTextBox.Text;
-        _settings.ATSPath = ATSPathTextBox.Text;
-        _settings.ETS2ModPath = ETS2ModPathTextBox.Text;
-        _settings.ATSModPath = ATSModPathTextBox.Text;
-        _settings.OutputPath = OutputPathTextBox.Text;
+        _settings.RepositoryPath =
+            RepositoryPathTextBox.Text;
+
+        _settings.ETS2Path =
+            ETS2PathTextBox.Text;
+
+        _settings.ATSPath =
+            ATSPathTextBox.Text;
+
+        _settings.ETS2ModPath =
+            ETS2ModPathTextBox.Text;
+
+        _settings.ATSModPath =
+            ATSModPathTextBox.Text;
+
+        _settings.OutputPath =
+            OutputPathTextBox.Text;
 
         _settings.WslDistribution =
             WslDistributionComboBox.SelectedItem?.ToString()
@@ -80,5 +106,25 @@ public partial class SettingsView : UserControl
         RoutedEventArgs e)
     {
         LoadSettings();
+    }
+
+    private void AutoDetectButton_Click(
+        object? sender,
+        RoutedEventArgs e)
+    {
+        ETS2PathTextBox.Text =
+            PathDetectionService.GetETS2Path();
+
+        ATSPathTextBox.Text =
+            PathDetectionService.GetATSPath();
+
+        ETS2ModPathTextBox.Text =
+            PathDetectionService.GetETS2ModPath();
+
+        ATSModPathTextBox.Text =
+            PathDetectionService.GetATSModPath();
+
+        OutputPathTextBox.Text =
+            PathDetectionService.GetOutputPath();
     }
 }

@@ -2,64 +2,235 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
 
-        <StackPanel Margin="10">
+		<Grid Margin="10">
 
-            <TextBlock Text="Settings"
-                       FontSize="28"
-                       FontWeight="Bold"/>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
 
-            <Separator Margin="0,10"/>
+			<!-- Header -->
 
-            <TextBlock Text="ETS2 Installation Path"/>
-            <TextBox x:Name="ETS2PathTextBox"
-                     Height="30"
-                     Margin="0,5"/>
+			<TextBlock Grid.Row="0"
+                       Text="Settings"
+                       Style="{StaticResource PageTitleStyle}"
+                       Margin="0,0,0,20"/>
 
-            <TextBlock Text="ATS Installation Path"/>
-            <TextBox x:Name="ATSPathTextBox"
-                     Height="30"
-                     Margin="0,5"/>
+			<!-- General -->
 
-            <TextBlock Text="ETS2 Mod Folder"/>
-            <TextBox x:Name="ETS2ModPathTextBox"
-                     Height="30"
-                     Margin="0,5"/>
+			<Border Grid.Row="1"
+                    Style="{StaticResource CardStyle}"
+                    Margin="0,0,0,12">
 
-            <TextBlock Text="ATS Mod Folder"/>
-            <TextBox x:Name="ATSModPathTextBox"
-                     Height="30"
-                     Margin="0,5"/>
+				<StackPanel>
 
-            <TextBlock Text="Output Folder"/>
-            <TextBox x:Name="OutputPathTextBox"
-                     Height="30"
-                     Margin="0,5"/>
+					<TextBlock Text="General"
+                               Style="{StaticResource SectionTitleStyle}"
+                               Margin="0,0,0,15"/>
 
-            <TextBlock Text="WSL Distribution"/>
-            <ComboBox x:Name="WslDistributionComboBox"
-                      Height="30"
-                      Margin="0,5"/>
+					<TextBlock Text="Repository Path"/>
 
-            <StackPanel Orientation="Horizontal"
-                        Margin="0,20,0,0">
+					<Grid Margin="0,5,0,15">
 
-                <Button Content="Save Settings"
-                        Width="150"
-                        Height="35"
-                        Margin="0,0,10,0"
-                        Click="SaveSettings_Click"/>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="120"/>
+						</Grid.ColumnDefinitions>
 
-                <Button Content="Reload Settings"
-                        Width="150"
-                        Height="35"
-                        Click="ReloadSettings_Click"/>
+						<TextBox x:Name="RepositoryPathTextBox"
+                                 Height="36"
+                                 Margin="0,0,10,0"/>
 
-            </StackPanel>
+						<Button Grid.Column="1"
+                                Content="Browse..."
+                                Style="{StaticResource PrimaryButtonStyle}"/>
 
-        </StackPanel>
+					</Grid>
 
-    </ScrollViewer>
+					<TextBlock Text="WSL Distribution"/>
+
+					<ComboBox x:Name="WslDistributionComboBox"
+                              Height="36"
+                              Margin="0,5,0,0"/>
+
+				</StackPanel>
+
+			</Border>
+
+			<!-- ETS2 -->
+
+			<Border Grid.Row="2"
+                    Style="{StaticResource CardStyle}"
+                    Margin="0,0,0,12">
+
+				<StackPanel>
+
+					<TextBlock Text="ETS2 Configuration"
+                               Style="{StaticResource SectionTitleStyle}"
+                               Margin="0,0,0,15"/>
+
+					<TextBlock Text="ETS2 Installation Path"/>
+
+					<Grid Margin="0,5,0,12">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="120"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBox x:Name="ETS2PathTextBox"
+                                 Height="36"
+                                 Margin="0,0,10,0"/>
+
+						<Button Grid.Column="1"
+                                Content="Browse..."
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+					</Grid>
+
+					<TextBlock Text="ETS2 Mod Folder"/>
+
+					<Grid Margin="0,5,0,0">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="120"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBox x:Name="ETS2ModPathTextBox"
+                                 Height="36"
+                                 Margin="0,0,10,0"/>
+
+						<Button Grid.Column="1"
+                                Content="Browse..."
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+					</Grid>
+
+				</StackPanel>
+
+			</Border>
+
+			<!-- ATS -->
+
+			<Border Grid.Row="3"
+                    Style="{StaticResource CardStyle}"
+                    Margin="0,0,0,12">
+
+				<StackPanel>
+
+					<TextBlock Text="ATS Configuration"
+                               Style="{StaticResource SectionTitleStyle}"
+                               Margin="0,0,0,15"/>
+
+					<TextBlock Text="ATS Installation Path"/>
+
+					<Grid Margin="0,5,0,12">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="120"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBox x:Name="ATSPathTextBox"
+                                 Height="36"
+                                 Margin="0,0,10,0"/>
+
+						<Button Grid.Column="1"
+                                Content="Browse..."
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+					</Grid>
+
+					<TextBlock Text="ATS Mod Folder"/>
+
+					<Grid Margin="0,5,0,0">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="120"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBox x:Name="ATSModPathTextBox"
+                                 Height="36"
+                                 Margin="0,0,10,0"/>
+
+						<Button Grid.Column="1"
+                                Content="Browse..."
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+					</Grid>
+
+				</StackPanel>
+
+			</Border>
+
+			<!-- Output + Actions -->
+
+			<Border Grid.Row="4"
+                    Style="{StaticResource CardStyle}">
+
+				<StackPanel>
+
+					<TextBlock Text="Output Configuration"
+                               Style="{StaticResource SectionTitleStyle}"
+                               Margin="0,0,0,15"/>
+
+					<TextBlock Text="Output Folder"/>
+
+					<Grid Margin="0,5,0,20">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="120"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBox x:Name="OutputPathTextBox"
+                                 Height="36"
+                                 Margin="0,0,10,0"/>
+
+						<Button Grid.Column="1"
+                                Content="Browse..."
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+					</Grid>
+
+					<TextBlock Text="Actions"
+                               Style="{StaticResource SectionTitleStyle}"
+                               Margin="0,0,0,15"/>
+
+					<WrapPanel>
+
+						<Button Content="Save Settings"
+                                Width="180"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="SaveSettings_Click"/>
+
+						<Button Content="Reload Settings"
+                                Width="180"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="ReloadSettings_Click"/>
+
+						<Button x:Name="AutoDetectButton"
+                                Content="Auto Detect Paths"
+                                Width="200"
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+					</WrapPanel>
+
+				</StackPanel>
+
+			</Border>
+
+		</Grid>
+
+	</ScrollViewer>
 
 </UserControl>
